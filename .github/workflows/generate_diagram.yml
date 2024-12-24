@@ -17,13 +17,20 @@ jobs:
       - name: Set up PlantUML
         run: sudo apt-get install plantuml -y
 
+      - name: Create Output Directory
+        run: mkdir -p diagrams/output
+
       - name: Generate Diagram
         run: plantuml diagrams/class_diagram.puml -o diagrams/output
 
+      - name: Verify Diagram Output
+        run: ls -l diagrams/output
+
       - name: Commit Diagram
+        if: success()
         run: |
-          git config --local user.name \"github-actions[bot]\"
-          git config --local user.email \"github-actions[bot]@users.noreply.github.com\"
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add diagrams/output/class_diagram.png
-          git commit -m \"Update generated UML diagram\"
+          git commit -m "Update generated UML diagram"
           git push
