@@ -1,0 +1,16 @@
+# Sample .puml File
+
+```puml
+@startuml
+interface PaymentGateway {
+    +processPayment(amount: Double): Boolean
+}
+
+class PayPalGateway {
+    +processPayment(amount: Double): Boolean
+    -authenticate(): void
+    -transactionID: String
+}
+
+PaymentGateway <|.. PayPalGateway
+@enduml
